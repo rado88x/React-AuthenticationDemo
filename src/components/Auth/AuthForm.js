@@ -37,25 +37,32 @@ const AuthForm = () => {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => {
-      setIsLoading(false);
-      if (res.ok) {
-        console.log("OK");
-        return res.json();
-      } else {
-        return res.json().then((data) => {
-          console.log(data);
-          let errorMessage = "Authentication failed!";
-          if (data && data.error && data.error.message) {
-            errorMessage = data.error.message;
-          }
-         
-          throw new Error (errorMessage);
-        });
-      }
-    }).then((data=>{}).catch((error)=>{
-      alert(errorMessage);
-    });
+    })
+      .then((res) => {
+        setIsLoading(false);
+        if (res.ok) {
+          console.log("OK");
+          return res.json();
+        } else {
+          return res.json().then((data) => {
+            console.log(data);
+            let errorMessage = "Authentication failed!";
+            if (data && data.error && data.error.message) {
+              errorMessage = data.error.message;
+            }
+            // alert(errorMessage);
+            throw new Error(errorMessage);
+          });
+        }
+      })
+      .then((data) => {
+        console.log("Success !");
+        console.log(data)
+      })
+      .catch((err) => {
+        console.log("Success NOT !");
+        alert(err.message);
+      });
   };
 
   return (
